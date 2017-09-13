@@ -1,8 +1,9 @@
 body {
-    background: cornsilk;
+    background: #efefef;
 }
 
 #canvas {
+    border-radius: 400px;
     margin-top: 200px;
     padding: 10px;
     background: #fff;
