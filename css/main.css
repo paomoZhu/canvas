@@ -1,10 +1,15 @@
 body {
-    background: #dddddd;
+    background: cornsilk;
 }
 
 #canvas {
-    margin: 10px;
+    margin-top: 200px;
     padding: 10px;
     background: #fff;
-    border: thin inset #aaa;
+    border: 1px dashed cornflowerblue;
+}
+
+body .center {
+    display: block;
+    margin: auto auto;
 }
