@@ -25,11 +25,14 @@ function drawTwoArcs() {
 
     context.beginPath();
     context.arc(250, 250, 150, 0, Math.PI*2, false);
+
     context.arc(250, 250, 100, 0, Math.PI*2, true);
 
     context.fill();
     context.shadowOffsetX = 0;
     context.shadowOffsetY = 0;
+
+    context.beginPath(); //  清除子路径终点到起点的线
     context.stroke();
 
 }
