@@ -3,14 +3,17 @@ body {
 }
 
 #canvas {
-    border-radius: 400px;
     margin-top: 200px;
     padding: 10px;
     background: #fff;
     border: 1px dashed cornflowerblue;
 }
 
-body .center {
+.center {
     display: block;
     margin: auto auto;
+}
+
+.radius {
+    border-radius: 100%;
 }
