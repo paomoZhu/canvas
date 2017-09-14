@@ -24,7 +24,7 @@ gulp.task('minifyjs', function () {
 });
 
 gulp.task('minifycss', function () {
-    return gulp.src('try/css/*.css')
+    return gulp.src(['try/css/*.css', 'try/css/*/*.css'])
         .pipe(cleanCSS())
         .pipe(gulp.dest('dist/css'))
 });
