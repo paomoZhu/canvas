@@ -21,16 +21,16 @@ var eraseAllButton = document.getElementById('eraseAllButton'),
     function drawGrid(context, color, stepX, stepY) {
 
         context.strokeStyle = color;
-        context.lineWidth = 0.5;
+        context.lineWidth = 1;
 
-        for (var i = stepX + 0.5; i< context.canvas.width; i += stepX){
+        for (var i = stepX + 1; i< context.canvas.width; i += stepX){
             context.beginPath();
             context.moveTo(i, 0);
             context.lineTo(i, context.canvas.height);
             context.stroke();
         }
 
-        for(var i = stepY + 0.5; i< context.canvas.height; i += stepY){
+        for(var i = stepY + 1; i< context.canvas.height; i += stepY){
             context.beginPath();
             context.moveTo(0, i);
             context.lineTo(context.canvas.width, i);
@@ -182,5 +182,7 @@ var eraseAllButton = document.getElementById('eraseAllButton'),
     }
 
     //initialzation
+
     context.strokeStyle = strokeStyleSelect.value;
     drawGrid(context, 'lightgray', 10, 10);
+
