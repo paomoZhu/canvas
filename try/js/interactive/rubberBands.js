@@ -165,6 +165,7 @@ var eraseAllButton = document.getElementById('eraseAllButton'),
 
         context.clearRect(0 , 0, canvas.width, canvas.height);
         drawGrid(context, 'lightgray', 10, 10);
+        context.strokeStyle = strokeStyleSelect.value;
         saveDrawingSurface();
 
     }
@@ -183,6 +184,6 @@ var eraseAllButton = document.getElementById('eraseAllButton'),
 
     //initialzation
 
-    context.strokeStyle = strokeStyleSelect.value;
-    drawGrid(context, 'lightgray', 10, 10);
 
+    drawGrid(context, 'lightgray', 10, 10);
+    context.strokeStyle = strokeStyleSelect.value;

@@ -15,3 +15,9 @@ body {
     marign-left: 10px;
     shadow: 4px 4px 8px rgba(0, 0, 0, .5);
 }
+
+.center {
+    margin: 200px auto;
+    width: 600px;
+    position: relative;
+}
