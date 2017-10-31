@@ -22,6 +22,11 @@
         .valign-demo h5{
             line-height:800px;
         }
+
+        canvas {
+            background-color: rgba(255,255,255,0) !important;
+            margin: 0 auto;
+        }
     </style>
     <!--<link rel="stylesheet" href="css/main.css">-->
     <!--<link rel="stylesheet" href="css/sprit.css">-->
@@ -190,9 +195,9 @@
     </div>
 
     <div class="row">
-        <div class="col s12">
+        <div class="col s12 center">
             <button class="create btn waves-effect waves-light" onclick="showIt()">生成标签云
-                <i class="Small material-icons right">send</i>
+                <i class="Small material-icons right" style="transform: rotate(180deg);">navigation</i>
             </button>
         </div>
     </div>
@@ -203,7 +208,7 @@
                 <h5 class="center">来点内容吧！</h5>
             </div>
 
-            <canvas style="float: right;display: block;" class="center" id="word_cloud_canvas"></canvas>
+            <canvas style="display: block;" class="center" id="word_cloud_canvas"></canvas>
         </div>
     </div>
 
