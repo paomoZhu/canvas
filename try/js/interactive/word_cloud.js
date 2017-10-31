@@ -345,7 +345,7 @@ word_cloud.prototype.wordPixel=function(text,size,color,rotate)
             _self.ctx_temp.translate(centerX,centerY);
             _self.ctx_temp.rotate((Math.PI / 180) * oldRotate);
 
-            _self.ctx_temp.fillText(text, -centerX, -centerY);
+            _self.ctx_temp.fillText(text, -centerX + (a/2 - width/2 > 0 ? (a/2 - width/2): 0), -centerY + (b/2 - height/2 > 0 ? (b/2 - height/2): 0));
 
             _self.ctx_temp.rotate((Math.PI / 180) * (-oldRotate));
             _self.ctx_temp.translate(-centerX,-centerY);
