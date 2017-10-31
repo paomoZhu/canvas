@@ -356,3 +356,19 @@ word_cloud.prototype.wordPixel=function(text,size,color,rotate)
 
         return _self.ctx_temp.getImageData(0,0,width,height);
     }
+
+
+/**
+ *
+ *    word_cloud 组件
+ *    show() 方法中data的结构 [['33', 'aaa', '#ffffff'] , [权重, '文字', 'color']];
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * */
