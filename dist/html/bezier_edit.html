@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>T·R·Y - drawing bezier curves</title>
+    <link rel="icon" type="image/x-icon" href="../image/favicon.ico">
+    <link rel="stylesheet" href="../css/bezier_edit.css">
+</head>
+<body>
+
+    <canvas id="canvas" class="center" width="605" height="400">
+        no support canvas!!
+    </canvas>
+
+    <div id="controls">
+        Stroke color: <select id="strokeStyleSelect">
+
+        <option value="red">red</option>
+        <option value="green">green</option>
+        <option value="blue">blue</option>
+        <option value="orange">orange</option>
+        <option value="cornflowerblue">cornflowerblue</option>
+        <option value="goldenrod">goldenrod</option>
+        <option value="navy" selected>navy</option>
+        <option value="purple">purple</option>
+
+        </select>
+
+        Guidewires:
+        <input type="checkbox" checked id="guidewireCheckbox">
+        <input type="button" value="Erase all" id="eraseAllButton">
+    </div>
+
+    <div id="instructions" class="floatingControls">
+        <p>Drag the curve end- and control points, click outside of the points to finalize the curve.</p>
+        <p>when you are done dragging end- and control points, click outside of the points to finalize the curve.</p>
+        <input type="button" value="Okay" autofocus id="instructionsOkayButton">
+        <input type="button" value="Do not show these instructions again" id="instructionsNoMoreButton">
+    </div>
+
+</body>
+<script></script>
+<script src="../js/preHandle.js"></script>
+<script src="../js/grid.js"></script>
+<script src="../js/Graphical/bezier_edit.js"></script>
+</html>
