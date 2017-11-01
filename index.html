@@ -73,6 +73,47 @@
             0%   { left: 50%; }
             100% { left: 49%; }
         }
+
+        @-webkit-keyframes music-play {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        .audio-ctrl {
+            position: absolute;
+            right:0;
+            top: 0;
+        }
+
+        .audio-ctrl .player {
+            width: 70px;
+            position: absolute;
+            right: 40px;
+            top: 100px;
+
+            animation-name: none;
+            animation-timing-function:linear;
+            animation-duration: 2000ms;
+            animation-iteration-count: infinite;
+            /*animation-direction: alternate;*/
+        }
+        .audio-ctrl .play {
+            width: 27px;
+            position: absolute;
+            top: 175px;
+            right: 61px;
+            display: none;
+            cursor: pointer;
+        }
+        .audio-ctrl .pahse {
+            width: 21px;
+            position: absolute;
+            right: 64px;
+            top: 178px;
+            display: none;
+            cursor: pointer;
+        }
     </style>
     <!--<link rel="stylesheet" href="css/main.css">-->
     <!--<link rel="stylesheet" href="css/sprit.css">-->
@@ -81,6 +122,11 @@
 <body style="background: -webkit-linear-gradient(top left, #fdfbfb, #ebedee);">
 
 <div class="container">
+    <div class="audio-ctrl">
+        <img class="player" src="dist/image/audioPlayer.svg">
+        <img class="pahse" src="dist/image/play.svg">
+        <img class="play" src="dist/image/pahse.svg">
+    </div>
     <div class="row">
         <div class="col s12 right">
             <h3 class="right" style="font-family: 'Roboto', sans-serif; font-weight: 300">标签云</h3>
@@ -292,12 +338,23 @@
     });
     $(document).ready(function () {
 
+        var player = $('.player'),
+            bgm = $('#bgm'),
+            play = $('.play'),
+            pahse = $('.pahse');
+
         function fillText(){
             $('.create').attr('disabled', true);
             textArea.focus();
             introduceSelf(function(){
                 $('.create-btn > i').show();
                 $('#bgm').get(0).play();
+                $('.play').css({
+                    display: 'block'
+                });
+                $('.player').css({
+                    "animation-name": 'music-play'
+                });
                 localStorage.setItem('come', true);
             });
             function introduceSelf(cb){
@@ -330,7 +387,35 @@
             fillText();
         }else{
             $('#bgm').get(0).play();
+            player.css({
+                "animation-name": 'music-play'
+            });
+            play.css({
+                display: 'block'
+            });
         }
+
+        play.on('click', function (e) {
+
+            bgm.get(0).pause();
+            player.css({
+                'animation-name': 'none'
+            });
+            pahse.show();
+            play.hide();
+
+        });
+
+        pahse.on('click', function (e) {
+
+            bgm.get(0).play();
+            player.css({
+                'animation-name': 'music-play'
+            });
+            pahse.hide();
+            play.show();
+
+        })
     });
 
     
