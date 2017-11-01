@@ -31,155 +31,54 @@
         textarea::-webkit-input-placeholder{
             font-weight: 200;
         }
+
+        .focus-left {
+            position: absolute;
+            left: 50%;
+            top: 26%;
+            margin-left: -120px !important;
+            transform: rotate(90deg) !important;
+            font-size: 18px;
+            color: #777;
+            display: none;
+
+            animation-name: guide;
+            animation-duration: 400ms;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+
+        }
+        .focus-right {
+            position: absolute;
+            left: 50%;
+            top: 26%;
+            margin-left: 101px !important;
+            transform: rotate(-90deg) !important;
+            font-size: 18px;
+            color: #777;
+            display: none;
+
+            animation-name: guide-2;
+            animation-duration: 400ms;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        @-webkit-keyframes guide {
+            0%   { left: 50%; }
+            100% { left: 51%; }
+        }
+
+        @-webkit-keyframes guide-2 {
+            0%   { left: 50%; }
+            100% { left: 49%; }
+        }
     </style>
     <!--<link rel="stylesheet" href="css/main.css">-->
     <!--<link rel="stylesheet" href="css/sprit.css">-->
     <!--<link rel="stylesheet" href="css/clip.css">-->
 </head>
 <body style="background: -webkit-linear-gradient(top left, #fdfbfb, #ebedee);">
-<!--<nav class="white" role="navigation">-->
-    <!--<div class="nav-wrapper container">-->
-        <!--<a id="logo-container" href="#" class="brand-logo">-->
-            <!--<img src="dist/image/favicon.ico" class="logo-image" alt="">-->
-        <!--</a>-->
-        <!--<ul class="right hide-on-med-and-down">-->
-            <!--<li><a href="dist/html/go.html">戳我</a></li>-->
-        <!--</ul>-->
-        <!--<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>-->
-    <!--</div>-->
-<!--</nav>-->
-
-<!--<div id="index-banner" class="parallax-container">-->
-    <!--<div class="section no-pad-bot">-->
-        <!--<div class="container">-->
-            <!--<br><br>-->
-            <!--<h1 class="header center teal-text text-lighten-2">衣·食·住·行</h1>-->
-            <!--<div class="row center">-->
-                <!--<h5 class="header col s12 light">简单·健康·舒适·随心</h5>-->
-            <!--</div>-->
-            <!--<div class="row center">-->
-                <!--<a href="#" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">开始</a>-->
-            <!--</div>-->
-            <!--<br><br>-->
-
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="parallax"><img src="dist/image/background1.jpg" alt="Unsplashed background img 1"></div>-->
-<!--</div>-->
-
-
-<!--<div class="container">-->
-    <!--<div class="section">-->
-
-        <!--&lt;!&ndash;   Icon Section   &ndash;&gt;-->
-        <!--<div class="row">-->
-            <!--<div class="col s12 m4">-->
-                <!--<div class="icon-block">-->
-                    <!--<h2 class="center brown-text"><a href="dist/html/rubber-bands.html">橡皮擦</a></h2>-->
-                    <!--<h5 class="center">可交互</h5>-->
-                    <!--<p class="light">自助线条生成器</p>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="col s12 m4">-->
-                <!--<div class="icon-block">-->
-                    <!--<h2 class="center brown-text"><a href="dist/html/board.html">仪表盘</a></h2>-->
-                    <!--<h5 class="center">大大的</h5>-->
-                    <!--<p class="light">飙车爱好者进</p>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--<div class="col s12 m4">-->
-                <!--<div class="icon-block">-->
-                    <!--<h2 class="center brown-text"><a href="dist/html/bezier.html">贝塞尔曲线</a></h2>-->
-                    <!--<h5 class="center">国国国</h5>-->
-                    <!--<p class="light">-->
-                        <!--<a href="dist/html/bezier_2.html">圆角三角</a>-->
-                        <!--<a href="dist/html/bezier_3.html">三次曲线</a>-->
-                        <!--<a href="dist/html/bezier_edit.html">三次曲线</a>-->
-                    <!--</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->
-
-
-<!--<div class="parallax-container valign-wrapper">-->
-    <!--<div class="section no-pad-bot">-->
-        <!--<div class="container">-->
-            <!--<div class="row center">-->
-                <!--<h5 class="header col s12 light">简单·健康·舒适·随心</h5>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="parallax"><img src="dist/image/background2.jpg" alt="Unsplashed background img 2"></div>-->
-<!--</div>-->
-
-<!--<div class="container">-->
-    <!--<div class="section">-->
-
-        <!--<div class="row">-->
-            <!--<div class="col s12 center">-->
-                <!--<h3><i class="mdi-content-send brown-text"></i></h3>-->
-                <!--<h4>说·学·逗·唱</h4>-->
-                <!--<p class="left-aligh light">-->
-                    <!--i 啊；是的；啊话说的；哦午睡；哦滴；哦啊速度；哦哎速度；哦球赛的；i 啊 u 说；的六啊；哦说据大会速发 i哼；啊爽发酥个老大浪费的后果各级政府管理好了和联合国联合管理好了人工湖阿尔；i 好aerie； 爱而活；事儿； 啊恶化感染啊哈-->
-                <!--</p>-->
-            <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->
-
-
-<!--<div class="parallax-container valign-wrapper">-->
-    <!--<div class="section no-pad-bot">-->
-        <!--<div class="container">-->
-            <!--<div class="row center">-->
-                <!--<h5 class="header col s12 light">简单·健康·舒适·随心</h5>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="parallax"><img src="dist/image/background3.jpg" alt="Unsplashed background img 3"></div>-->
-<!--</div>-->
-
-<!--<footer class="page-footer teal">-->
-    <!--<div class="container">-->
-        <!--<div class="row">-->
-            <!--<div class="col l6 s12">-->
-                <!--<h5 class="white-text">阿西吧</h5>-->
-                <!--<p class="grey-text text-lighten-4">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>-->
-
-
-            <!--</div>-->
-            <!--<div class="col l3 s12">-->
-                <!--<h5 class="white-text">设置</h5>-->
-                <!--<ul>-->
-                    <!--<li><a class="white-text" href="#!">1</a></li>-->
-                    <!--<li><a class="white-text" href="#!">2</a></li>-->
-                    <!--<li><a class="white-text" href="#!">3</a></li>-->
-                    <!--<li><a class="white-text" href="#!">4</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-            <!--<div class="col l3 s12">-->
-                <!--<h5 class="white-text">设置</h5>-->
-                <!--<ul>-->
-                    <!--<li><a class="white-text" href="#!">1</a></li>-->
-                    <!--<li><a class="white-text" href="#!">2</a></li>-->
-                    <!--<li><a class="white-text" href="#!">3</a></li>-->
-                    <!--<li><a class="white-text" href="#!">4</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="footer-copyright">-->
-        <!--<div class="container">-->
-            <!--Made by <a class="brown-text text-lighten-3" href="#">Materialize</a>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</footer>-->
 
 <div class="container">
     <div class="row">
@@ -199,10 +98,12 @@
     </div>
 
     <div class="row">
-        <div class="col s12 center">
+        <div class="col s12 center create-btn" style="position: relative">
             <button class="create btn waves-effect waves-light" onclick="showIt()">生成标签云
                 <i class="Small material-icons right" style="transform: rotate(180deg);">navigation</i>
             </button>
+            <i class="focus-left Small material-icons right" style="transform: rotate(180deg);">navigation</i>
+            <i class="focus-right Small material-icons right" style="transform: rotate(180deg);">navigation</i>
         </div>
     </div>
 
@@ -216,10 +117,11 @@
         </div>
     </div>
 
+
+    <audio id="click" src="dist/image/click.mp3"></audio>
+    <audio id="create" src="dist/image/create.mp3"></audio>
+    <audio id="bgm" src="dist/image/summer.mp3" loop="loop"></audio>
 </div>
-
-
-
 </body>
 <!--<script src="dist/js/preHandle.js"></script>-->
 <!--<script src="js/example1.js"></script>-->
@@ -236,6 +138,12 @@
 <script>
     function showIt()
     {
+
+        if(!!$('.create-btn > i').is(':visible')){
+            $('.create-btn > i').hide();
+        }
+
+        $('#create').get(0).play();
 //	var _E=function(id){return document.getElementById(id)};
 //	var config={
 //		minstep:		parseInt(_E("minstep").value),			//最小检测范围
@@ -374,5 +282,57 @@
 
 
     }
+
+    var introduce = '介绍一下自己，我的名字叫顾梦铖。来自北半球的亚洲，中国，浙江省杭州市的一名前端工程师。欢迎你的到来～现在你所看到的是由我开发的一个标签云生成器的小玩意儿，我现在所输入的文字，即将解析成如下的一个标签云。好的！见证奇迹的时刻来了！！';
+    var textArea = $('.materialize-textarea');
+    var tempInput = '', time = 0;
+    var inputArr = introduce.split('').map(function(content){
+        tempInput += content;
+        return tempInput;
+    });
+    $(document).ready(function () {
+
+        function fillText(){
+            $('.create').attr('disabled', true);
+            textArea.focus();
+            introduceSelf(function(){
+                $('.create-btn > i').show();
+                $('#bgm').get(0).play();
+                localStorage.setItem('come', true);
+            });
+            function introduceSelf(cb){
+                if(inputArr.length !== 0){
+                    var txt = inputArr.shift();
+
+                    if(txt.substr(txt.length-1) !== '。'){
+                        time = 30;
+                    }else{
+                        time = 1200;
+                    }
+
+                    setTimeout(function(){
+                        $('#click').get(0).play();
+                        textArea.val(txt);
+                        introduceSelf(cb);
+                    }, time);
+                }else{
+                    $('.create').attr('disabled', false);
+                    if(cb){
+                        cb();
+                    }
+                }
+            }
+        }
+
+        var came = localStorage.getItem('come');
+
+        if(!came){
+            fillText();
+        }else{
+            $('#bgm').get(0).play();
+        }
+    });
+
+    
 </script>
 </html>

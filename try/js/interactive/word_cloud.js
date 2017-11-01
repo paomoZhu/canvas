@@ -223,7 +223,7 @@ word_cloud.prototype.appendWord=function(objWord){
 
             //整个画布覆盖,
             _self.ctx.putImageData(curData,x,y);
-            console.log(x, y)
+            // console.log(x, y)
             break;
         }
     }
