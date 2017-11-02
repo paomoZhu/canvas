@@ -314,8 +314,12 @@
                             text = '4 ' + text;
                         }
 
-                        if(index > 30){
+                        if(index > 30 && index <= 50){
                             text = '2 ' + text;
+                        }
+
+                        if(index > 50){
+                            text = '1 ' + text;
                         }
 
                         return text;
