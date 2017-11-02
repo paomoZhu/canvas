@@ -264,20 +264,22 @@
 
                     return arr.map(function(text, index){
 
-                        if(index === 0){
-                            text = '33 ' + text + ' #123456';
+                        if(index === 0 && text.length<3){
+                            text = '29 ' + text + ' #123456';
+                        }else if(index === 0 && text.length>=3){
+                            text = '20 ' + text;
                         }
 
                         if(index ===1){
-                            text = '22 ' + text;
+                            text = '20 ' + text;
                         }
 
                         if(index > 1 && index <= 2){
-                            text = '21 ' + text;
+                            text = '19 ' + text;
                         }
 
                         if(index > 2 && index <= 3){
-                            text = '20 ' + text;
+                            text = '18 ' + text;
                         }
 
                         if(index > 3 && index <= 4){
