@@ -229,6 +229,8 @@
             dataType: 'json',
             success: function(rep){
                 var repData, data = [], vlist;
+                var canvas = $('canvas'),
+                    tipContent = $('.valign-demo');
 
                 if(rep.showapi_res_code === -1) {
                     $('.input-field label').css({
@@ -236,6 +238,15 @@
                     });
 
                     return false;
+                }
+
+                if(rep.showapi_res_body.list.length === 0){
+                    canvas.hide();
+                    $('.valign-demo').show().find('.center').html('内容太少啦～');
+
+                    return false;
+                }else{
+                    canvas.show();
                 }
 
                 $('.input-field label').css({
