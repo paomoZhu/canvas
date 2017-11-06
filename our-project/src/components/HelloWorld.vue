@@ -1,22 +1,18 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <!--<h1>{{ msg }}</h1>-->
     <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+
+
+    <div class="col s2">
+      <!--<i class="material-icons prefix">phone</i>-->
+      <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(color)">
+      <label for="color-select" style="font-size: 20px">底色</label>
+    </div>
+
+    <div class="col s2 m2" v-bind:style="{ backgroundColor: color}">
+      <p class="z-depth-2" style="color: #fff">color</p>
+    </div>
   </div>
 </template>
 
@@ -25,7 +21,11 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      color: '',
+      selectColor: function (color) {
+        console.log(color)
+      }
     }
   }
 }
@@ -49,5 +49,28 @@ li {
 
 a {
   color: #42b983;
+}
+  #color-select {
+    border: 1px solid #aaa;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 3px;
+  }
+#color-select::-webkit-color-swatch-wrapper{
+  padding: 1px 0;
+}
+#color-select::-webkit-color-swatch {
+  border: 0;
+  border-radius: 5px;
+}
+#color-select:hover {
+  border-color: #777;
+}
+#color-select:active {
+  border-color: #777;
 }
 </style>
