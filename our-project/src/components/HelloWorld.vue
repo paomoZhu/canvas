@@ -27,6 +27,9 @@ export default {
         console.log(color)
       }
     }
+  },
+  created: function () {
+    this.color = '#ffa07e'
   }
 }
 </script>
