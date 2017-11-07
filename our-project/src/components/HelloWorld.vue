@@ -15,7 +15,7 @@
       <div class="col s3 m3">
         <div class="card">
           <div class="card-image">
-            <img src="../assets/cover.jpg">
+            <img src="../assets/cover_1.png">
             <span class="card-title">Card Title</span>
           </div>
           <div class="card-content">
