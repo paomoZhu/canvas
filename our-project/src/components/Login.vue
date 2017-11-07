@@ -3,7 +3,7 @@
     <div class="row">
     <!-- 页面内容放在这里 -->
       <div id="bg-pic" class="col s12 row">
-         <img class="center-align" v-bind:class="{ 'height-fix': origin === 'height', 'width-fix': origin === 'width'}" src="../assets/cover.png">
+         <img class="center-align" v-bind:class="{ 'height-fix': origin === 'height', 'width-fix': origin === 'width'}" src="../assets/cover_1.png">
       </div>
     </div>
     <div class="row" style="position: relative">
