@@ -3,7 +3,7 @@
     <div class="row">
     <!-- 页面内容放在这里 -->
       <div id="bg-pic" class="col s12 row">
-         <img class="center-align" v-bind:class="{ 'height-fix': origin === 'height', 'width-fix': origin === 'width'}" src="../assets/cover_1.png">
+         <img class="center-align" v-bind:class="{ 'height-fix': origin === 'height', 'width-fix': origin === 'width'}" src="../assets/cover2.png">
       </div>
     </div>
     <div class="row" style="position: relative">
@@ -61,6 +61,15 @@
         })
         bgArea.height($(window).height() / 2)
         inputArea.height($(window).height() / 2)
+      }
+
+      preloader()
+      function preloader () {
+        var imageObj = new Image()
+        imageObj.src = '/static/img/cover_1.8027e65.png'
+        imageObj.onload = function () {
+          $('#bg-pic img').get(0).src = imageObj.src
+        }
       }
       $(window).bind('resize', function () {
         resize()
