@@ -20,7 +20,7 @@
         </a>
       </form>
       <div class="col s12 center-align" id="author">
-        <span>—&nbsp;</span> {{author}}
+        <span>—&nbsp;</span> {{author.name}} · {{author.location}}
       </div>
     </div>
   </div>
@@ -33,7 +33,10 @@
       return {
         msg: 'Welcome to Your Vue.js App',
         origin: 'height',
-        author: 'QMeiZi',
+        author: {
+          name: 'QMeiZi',
+          location: '站酷'
+        },
         code: ''
       }
     },
@@ -66,7 +69,8 @@
       preloader()
       function preloader () {
         var imageObj = new Image()
-        imageObj.src = '/laboratory/static/img/cover_1.8027e65.png'
+        imageObj.src = '/static/img/cover_1.8027e65.png'
+//        imageObj.src = '/laboratory/static/img/cover_1.8027e65.png'
         imageObj.onload = function () {
           $('#bg-pic img').get(0).src = imageObj.src
         }
@@ -79,7 +83,11 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+  #app {
+    height: 100%;
+  }
+
   h1, h2 {
     font-weight: normal;
   }
