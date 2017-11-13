@@ -6,6 +6,8 @@
       </h2>
     </div>
 
+    <img src="../assets/cover_1.png" style="display: none">
+
     <div class="col s2 m2" v-bind:style="{ backgroundColor: color}">
       <p class="z-depth-1" style="color: #fff">color</p>
     </div>
