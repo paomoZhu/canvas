@@ -238,7 +238,7 @@
     },
     created: function () {
       this.color = '#fffcf8'
-      this.pic.src = '../assets/cover_1.png'
+      this.pic.src = '/laboratory/static/img/cover_1.8027e65.png'
     },
     mounted: function (noBind) {
       var init = this.selectColor
