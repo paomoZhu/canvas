@@ -69,7 +69,7 @@
       preloader()
       function preloader () {
         var imageObj = new Image()
-        imageObj.src = '/static/img/cover_1.8027e65.png'
+        imageObj.src = '../assets/cover_1.png'
 //        imageObj.src = '/laboratory/static/img/cover_1.8027e65.png'
         imageObj.onload = function () {
           $('#bg-pic img').get(0).src = imageObj.src

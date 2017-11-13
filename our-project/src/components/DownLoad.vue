@@ -6,8 +6,6 @@
       </h2>
     </div>
 
-    <img src="../assets/cover_1.png" style="display: none">
-
     <div class="col s2 m2" v-bind:style="{ backgroundColor: color}">
       <p class="z-depth-1" style="color: #fff">color</p>
     </div>
@@ -240,7 +238,7 @@
     },
     created: function () {
       this.color = '#fffcf8'
-      this.pic.src = '/static/img/cover_1.8027e65.png'
+      this.pic.src = '../assets/cover_1.png'
     },
     mounted: function (noBind) {
       var init = this.selectColor
