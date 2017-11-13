@@ -11,7 +11,7 @@ module.exports = {
     index: path.resolve(__dirname, '../../laboratory/index.html'),
     assetsRoot: path.resolve(__dirname, '../../laboratory'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/laboratory/',
+    assetsPublicPath: '/laboratory/static',
     // assetsPublicPath: '/canvas-learning/laboratory/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
