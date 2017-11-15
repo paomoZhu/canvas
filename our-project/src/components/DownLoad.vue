@@ -8,34 +8,46 @@
 
     <img src="../assets/bgpic.png" style="display: none" alt="">
 
-    <div class="row valign-wrapper" id="main">
+    <div class="row valign-wrapper" id="main" style="overflow: hidden">
       <div class="col s6 m6 valign" id="canvas-box">
         <ul class="tool-slider">
           <li>
             <div class="col s2">
-              <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/phone-modal.png">
-              <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/mac-modal.png" style="width: 30px;height: 30px;margin: 4px 2px;">
+              <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/phone-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="手机模式">
+              <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/mac-modal.png" style="width: 30px;height: 30px;margin: 4px 2px;" class="tooltipped" data-position="right" data-delay="0" data-tooltip="电脑模式">
             </div>
           </li>
           <li>
             <div class="col s2 color-board">
               <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(deltaY)">
-              <img src="../assets/color-board.png">
+              <img src="../assets/color-board.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="设置背景色">
             </div>
           </li>
           <li>
             <div class="col s2 horizontal">
-              <img src="../assets/download.png" v-on:click="download('jpg')">
+              <img src="../assets/download.png" v-on:click="download('jpg')" class="tooltipped" data-position="right" data-delay="0" data-tooltip="下载图片">
             </div>
           </li>
         </ul>
-        <!-- 800 450-->
         <div class="canvas-container" v-bind:class="{'canvas-mac': model == 'mac', 'canvas-phone': model == 'phone'}">
           <canvas id="canvas" class="valign" v-on:mousedown="bindMove($event)" v-on:mousewheel="aa($event)"></canvas>
         </div>
       </div>
       <div class="col s6 m6" style="position: relative;">
-        测试 222
+        <div class="row">
+          <div class="col s12">
+            输出图片规格:
+            <div class="input-field inline">
+              <input id="pic-width" placeholder="宽度" type="number" v-model="importWidth" v-on:change="setImport('height')" class="validate">
+            </div>
+            <i class="material-icons">lock</i>
+            <div class="input-field inline">
+              <input id="pic-height" placeholder="高度" type="number" v-model="importHeight" v-on:change="setImport('width')" class="validate">
+            </div>
+          </div>
+          <span class="thin" style="font-size: 13px">（ 默认当前画布大小 ）</span>
+        </div>
+        <canvas id="canvas2" style="position: absolute;top: -999999px"></canvas>
       </div>
     </div>
   </div>
@@ -48,6 +60,8 @@
       return {
         color: '',
         pic: new Image(),
+        importWidth: '',
+        importHeight: '',
         deltaY: 1,
         offset: {
           x: 0,
@@ -73,7 +87,26 @@
           }
         },
         model: 'phone',
+        setImport: function (key) {
+          if (typeof this.importWidth === 'undefined' || typeof this.importHeight === 'undefined' || (this.importHeight === '' && key === 'width') || (this.importWidth === '' && key === 'height')) {
+            this.importWidth = ''
+            this.importHeight = ''
+            window.Materialize.toast('修改完成!', 1500)
+            return false
+          }
+          if (this.model === 'phone') {
+            this.importWidth = key === 'width' ? Math.ceil(this.importHeight * 7 / 12) : this.importWidth
+            this.importHeight = key === 'height' ? Math.ceil(this.importWidth * 12 / 7) : this.importHeight
+          }
+          if (this.model === 'mac') {
+            this.importWidth = key === 'width' ? Math.ceil(this.importHeight * 16 / 9) : this.importWidth
+            this.importHeight = key === 'height' ? Math.ceil(this.importWidth * 9 / 16) : this.importHeight
+          }
+          window.Materialize.toast('修改完成！', 1500)
+        },
         changeModal: function () {
+          this.importWidth = ''
+          this.importHeight = ''
           this.model = (this.model === 'phone' ? 'mac' : 'phone')
           initDraw.call(this, 'noBind')
           function initDraw (noBind) {
@@ -134,7 +167,7 @@
                 $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;top: calc(50% + ' + scale * self.originSize[modal].top + 'px); }</style>')
               } else if (modal === 'mac') {
                 canvasWidth = mainBox.width() * 2 / 5
-                canvasHeight = canvasWidth * 9 / 16
+                canvasHeight = Math.ceil(canvasWidth * 9 / 16)
                 canvas.get(0).width = canvasWidth
                 canvas.get(0).height = canvasHeight
                 self.offset.imgPosX = -canvas.width() / 4
@@ -151,22 +184,25 @@
             }
           }
         },
-        selectColor: function (zoom, offsetX, offsetY) {
-          var canvas = $('#canvas')
+        selectColor: function (zoom, offsetX, offsetY, imgPosX, imgPosY, selector) {
+          var canvas = typeof selector !== 'undefined' ? $(selector) : $('#canvas')
           var ctx = canvas.get(0).getContext('2d')
           var width = canvas.get(0).width
           var height = canvas.get(0).height
           var zoomSize = zoom || 1
-          console.log(width, height)
+          var imgPos = {
+            x: typeof imgPosX !== 'undefined' ? imgPosX : this.offset.imgPosX,
+            y: typeof imgPosY !== 'undefined' ? imgPosY : this.offset.imgPosY
+          }
           ctx.clearRect(0, 0, width, height)
           ctx.fillStyle = this.color
           ctx.translate(width / 2, height / 2)
           ctx.scale(zoomSize, zoomSize)
           ctx.fillRect(-width / (2 * zoomSize), -height / (2 * zoomSize), width / zoomSize, height / zoomSize)
           if (this.model === 'phone') {
-            ctx.drawImage(this.pic, this.offset.imgPosX + (offsetX || 0), this.offset.imgPosY + (offsetY || 0), height / 2, width / 2)
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), height / 2, width / 2)
           } else {
-            ctx.drawImage(this.pic, this.offset.imgPosX + (offsetX || 0), this.offset.imgPosY + (offsetY || 0), width / 2, height / 2)
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), width / 2, height / 2)
           }
           ctx.scale(1 / zoomSize, 1 / zoomSize)
           ctx.translate(-width / 2, -height / 2)
@@ -196,7 +232,7 @@
             self.selectColor(self.deltaY, (event.offsetX - self.offset.x) / self.deltaY, (event.offsetY - self.offset.y) / self.deltaY)
           })
 
-          canvas.on('mouseleave', function (event) {
+          canvas.on('mouseleave', function () {
             $(document).unbind('mouseup')
           })
 
@@ -205,7 +241,6 @@
             self.offset.diffY = (event.offsetY - self.offset.y) / self.deltaY
             self.offset.imgPosX += self.offset.diffX
             self.offset.imgPosY += self.offset.diffY
-            console.log(self.offset.imgPosX, self.offset.imgPosX)
             canvas.unbind('mousemove')
             $(document).unbind('mouseup')
             canvas.css({
@@ -214,7 +249,41 @@
           })
         },
         download: function (type) {
-          var canvas = $('#canvas')
+          var importWidth = $('#pic-width')
+          var importHeight = $('#pic-height')
+          initDraw.call(this)
+          function initDraw () {
+            var init = this.selectColor
+            var canvas = $('#canvas2')
+            var self = this
+            var mainBox = $('#main')
+            if (this.model !== 'phone') {
+              initCanvasBoxunderModal('mac')
+            } else {
+              initCanvasBoxunderModal('phone')
+            }
+
+            function initCanvasBoxunderModal (modal) {
+              var canvasHeight
+              var canvasWidth
+              var scale
+              if (modal === 'phone') {
+                canvasHeight = importHeight.val() ? importHeight.val() : mainBox.height() * 3 / 5
+                canvasWidth = Math.round(canvasHeight * 7 / 12)
+                canvas.get(0).width = canvasWidth
+                canvas.get(0).height = canvasHeight
+                scale = canvasHeight / $('#canvas').height()
+              } else if (modal === 'mac') {
+                canvasWidth = importWidth.val() ? importWidth.val() : mainBox.width() * 2 / 5
+                canvasHeight = Math.round(canvasWidth * 9 / 16)
+                canvas.get(0).width = canvasWidth
+                canvas.get(0).height = canvasHeight
+                scale = canvasWidth / $('#canvas').width()
+              }
+              init.call(self, self.deltaY, null, null, self.offset.imgPosX * scale, self.offset.imgPosY * scale, '#canvas2')
+            }
+          }
+          var canvas = $('#canvas2')
           var imgdata = canvas.get(0).toDataURL(type)
           var fixtype = function (type) {
             type = type.toLocaleLowerCase().replace(/jpg/i, 'jpeg')
@@ -254,10 +323,10 @@
         'background-image': 'url(/laboratory/static/img/bgpic.429b3d0.png)'
       })
       mainBox.height(windowDom.height() - 170)
-      if (this.model !== 'phone') {
-        initCanvasBoxunderModal('mac')
-      } else {
+      if (this.model === 'phone') {
         initCanvasBoxunderModal('phone')
+      } else {
+        initCanvasBoxunderModal('mac')
       }
 
       if (!noBind) {
@@ -270,6 +339,9 @@
         })
         colorBoard.on('click', function () {
           $('.flow-text').trigger('click')
+        })
+        $(document).ready(function () {
+          $('.tooltipped').tooltip({delay: 50})
         })
       }
       function fixCanvasBox () {
@@ -302,7 +374,7 @@
           $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;top: calc(50% + ' + scale * self.originSize[modal].top + 'px) !important; }</style>')
         } else if (modal === 'mac') {
           canvasWidth = mainBox.width() * 2 / 5
-          canvasHeight = canvasWidth * 9 / 16
+          canvasHeight = Math.ceil(canvasWidth * 9 / 16)
           canvas.get(0).width = canvasWidth
           canvas.get(0).height = canvasHeight
           self.offset.imgPosX = -canvas.width() / 4
