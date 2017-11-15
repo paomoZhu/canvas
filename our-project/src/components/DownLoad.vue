@@ -6,9 +6,7 @@
       </h2>
     </div>
 
-    <div class="col s2 m2" v-bind:style="{ backgroundColor: color}">
-      <p class="z-depth-1" style="color: #fff">color</p>
-    </div>
+    <img src="../assets/bgpic.png" style="display: none" alt="">
 
     <div class="row valign-wrapper" id="main">
       <div class="col s6 m6 valign" id="canvas-box">
@@ -61,9 +59,10 @@
         },
         originSize: {
           phone: {
-            borderWidth: 38,
-            borderHeight: 136,
-            canvasHeight: 396
+            borderWidth: 37,
+            borderHeight: 130,
+            canvasHeight: 396,
+            top: 1
           },
           mac: {
             borderWidth: 208,
@@ -132,7 +131,7 @@
                 canvasContainer.css({
                   left: 0
                 })
-                $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important; }</style>')
+                $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;top: calc(50% + ' + scale * self.originSize[modal].top + 'px); }</style>')
               } else if (modal === 'mac') {
                 canvasWidth = mainBox.width() * 2 / 5
                 canvasHeight = canvasWidth * 9 / 16
@@ -238,6 +237,7 @@
     },
     created: function () {
       this.color = '#fffcf8'
+//      this.pic.src = '../static/img/cover_1.8027e65.png'
       this.pic.src = '/laboratory/static/img/cover_1.8027e65.png'
     },
     mounted: function (noBind) {
@@ -249,6 +249,10 @@
       var toolSlider = $('.tool-slider')
       var colorBoard = $('.color-board img')
       var canvasContainer = $('.canvas-container')
+      $('body').css({
+//        'background-image': 'url(../static/img/bgpic.429b3d0.png)'
+        'background-image': '/laboratory/static/img/bgpic.429b3d0.png'
+      })
       mainBox.height(windowDom.height() - 170)
       if (this.model !== 'phone') {
         initCanvasBoxunderModal('mac')
@@ -295,7 +299,7 @@
           canvasContainer.css({
             left: 0
           })
-          $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important; }</style>')
+          $('head').append('<style>.canvas-phone:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;top: calc(50% + ' + scale * self.originSize[modal].top + 'px) !important; }</style>')
         } else if (modal === 'mac') {
           canvasWidth = mainBox.width() * 2 / 5
           canvasHeight = canvasWidth * 9 / 16
@@ -459,7 +463,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
-    top: 50%;
+    top: calc(50%);
     background-image: url(../assets/I6.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -478,5 +482,14 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 1;
+  }
+</style>
+<style>
+  body {
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  html {
+    height: 100%;
   }
 </style>
