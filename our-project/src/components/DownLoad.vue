@@ -251,7 +251,7 @@
       var canvasContainer = $('.canvas-container')
       $('body').css({
 //        'background-image': 'url(../static/img/bgpic.429b3d0.png)'
-        'background-image': '/laboratory/static/img/bgpic.429b3d0.png'
+        'background-image': 'url(/laboratory/static/img/bgpic.429b3d0.png)'
       })
       mainBox.height(windowDom.height() - 170)
       if (this.model !== 'phone') {
