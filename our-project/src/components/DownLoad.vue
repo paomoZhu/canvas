@@ -36,7 +36,21 @@
       <div class="col s6 m6" style="position: relative;">
         <div class="row">
           <div class="col s12">
-            输出图片规格:
+            <label>原画作者：</label>
+            <span>QMeiZi</span>
+          </div>
+          <div class="col s12">
+            <label>来自：</label>
+            <span>站酷</span>
+          </div>
+          <div class="col s12">
+            <label>原画大小：</label>
+            <span>1280 · 859</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            下载图片规格:
             <div class="input-field inline">
               <input id="pic-width" placeholder="宽度" type="number" v-model="importWidth" v-on:change="setImport('height')" class="validate">
             </div>
@@ -340,9 +354,6 @@
         colorBoard.on('click', function () {
           $('.flow-text').trigger('click')
         })
-        $(document).ready(function () {
-          $('.tooltipped').tooltip({delay: 50})
-        })
       }
       function fixCanvasBox () {
         if (windowDom.height() < 800) {
@@ -554,6 +565,10 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     z-index: 1;
+  }
+
+  #dropdown1 li {
+    margin: 0;
   }
 </style>
 <style>
