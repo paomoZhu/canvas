@@ -2,24 +2,25 @@
   <div>
     <div class="logo row">
       <h2 class="col s12">
-        见客
+        一笔一画
       </h2>
     </div>
 
     <img src="../assets/bgpic.png" style="display: none" alt="">
 
-    <div class="row valign-wrapper" id="main" style="overflow: hidden">
+    <div class="row valign-wrapper" id="main" style="overflow: hidden;position: relative">
+      <img id="load-pic-container" style="position: absolute; top: 9999px" src="">
       <div class="col s6 m6 valign" id="canvas-box">
         <ul class="tool-slider">
           <li>
             <div class="col s2">
-              <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/phone-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="手机模式">
-              <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/mac-modal.png" style="width: 30px;height: 30px;margin: 4px 2px;" class="tooltipped" data-position="right" data-delay="0" data-tooltip="电脑模式">
+              <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/phone-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="手机模式">
+              <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/mac-modal.png" style="width: 30px;height: 30px;margin: 4px 2px;" class="tooltipped" data-position="right" data-delay="0" data-tooltip="电脑模式">
             </div>
           </li>
           <li>
             <div class="col s2 color-board">
-              <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(deltaY)">
+              <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(deltaY, null, null, undefined, undefined, undefined, initRate)">
               <img src="../assets/color-board.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="设置背景色">
             </div>
           </li>
@@ -35,6 +36,13 @@
       </div>
       <div class="col s6 m6" style="position: relative;">
         <div class="row">
+          <div class="waves-effect waves-light btn" id="load-pic-div" style="position: relative; overflow: hidden">
+            {{loadText}}
+            <i class="material-icons Medium right">work</i>
+            <input type="file" style="cursor: pointer;position: absolute; top: 0; left: 0;opacity: 0;width: 100%; height: 100%;" class="waves-effect waves-light btn" id="load-pic">
+          </div>
+        </div>
+        <div class="row">
           <div class="col s12">
             <label>原画作者：</label>
             <span>QMeiZi</span>
@@ -45,7 +53,7 @@
           </div>
           <div class="col s12">
             <label>原画大小：</label>
-            <span>1280 · 859</span>
+            <span>{{originSize.pic.width}} · {{originSize.pic.height}}</span>
           </div>
         </div>
         <div class="row">
@@ -77,6 +85,7 @@
         importWidth: '',
         importHeight: '',
         deltaY: 1,
+        loadText: '上传本地图片',
         offset: {
           x: 0,
           y: 0,
@@ -98,14 +107,19 @@
             canvasWidth: 480,
             top: -4,
             left: 10.5
+          },
+          pic: {
+            width: 1280,
+            height: 859
           }
         },
-        model: 'phone',
+        initRate: undefined,
+        model: 'mac',
         setImport: function (key) {
           if (typeof this.importWidth === 'undefined' || typeof this.importHeight === 'undefined' || (this.importHeight === '' && key === 'width') || (this.importWidth === '' && key === 'height')) {
             this.importWidth = ''
             this.importHeight = ''
-            window.Materialize.toast('修改完成!', 1500)
+            window.Materialize.toast('修改完成!', 2000)
             return false
           }
           if (this.model === 'phone') {
@@ -116,7 +130,7 @@
             this.importWidth = key === 'width' ? Math.ceil(this.importHeight * 16 / 9) : this.importWidth
             this.importHeight = key === 'height' ? Math.ceil(this.importWidth * 9 / 16) : this.importHeight
           }
-          window.Materialize.toast('修改完成！', 1500)
+          window.Materialize.toast('修改完成！', 2000)
         },
         changeModal: function () {
           this.importWidth = ''
@@ -159,7 +173,7 @@
               }
 
               initCanvasBoxunderModal(self.model)
-              init.call(self, self.deltaY)
+              init.call(self, self.deltaY, null, null, undefined, undefined, undefined, self.initRate)
             }
             function initCanvasBoxunderModal (modal) {
               var canvasHeight
@@ -171,7 +185,11 @@
                 canvas.get(0).width = canvasWidth
                 canvas.get(0).height = canvasHeight
                 self.offset.imgPosX = -canvas.height() / 4
-                self.offset.imgPosY = -canvas.width() / 4
+                if (self.initRate) {
+                  self.offset.imgPosY = self.offset.imgPosX / self.initRate
+                } else {
+                  self.offset.imgPosY = -canvas.width() / 4
+                }
                 canvasContainer.height(canvasHeight)
                 canvasContainer.width(canvasWidth)
                 scale = canvasHeight / self.originSize[modal].canvasHeight
@@ -185,7 +203,11 @@
                 canvas.get(0).width = canvasWidth
                 canvas.get(0).height = canvasHeight
                 self.offset.imgPosX = -canvas.width() / 4
-                self.offset.imgPosY = -canvas.height() / 4
+                if (self.initRate) {
+                  self.offset.imgPosY = self.offset.imgPosX / self.initRate
+                } else {
+                  self.offset.imgPosY = -canvas.height() / 4
+                }
                 canvasContainer.height(canvasHeight)
                 canvasContainer.width(canvasWidth)
                 scale = canvasWidth / self.originSize[modal].canvasWidth
@@ -194,15 +216,17 @@
                 })
                 $('head').append('<style>.canvas-mac:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;left: calc(50% + ' + scale * self.originSize[modal].left + 'px);top: calc(50% + ' + scale * self.originSize[modal].top + 'px); }</style>')
               }
-              init.call(self, self.deltaY)
+              init.call(self, self.deltaY, null, null, undefined, undefined, undefined, self.initRate)
             }
           }
         },
-        selectColor: function (zoom, offsetX, offsetY, imgPosX, imgPosY, selector) {
+        selectColor: function (zoom, offsetX, offsetY, imgPosX, imgPosY, selector, initRate) {
           var canvas = typeof selector !== 'undefined' ? $(selector) : $('#canvas')
           var ctx = canvas.get(0).getContext('2d')
           var width = canvas.get(0).width
           var height = canvas.get(0).height
+          var tempInitWidth = width
+          var tempInitheight = height
           var zoomSize = zoom || 1
           var imgPos = {
             x: typeof imgPosX !== 'undefined' ? imgPosX : this.offset.imgPosX,
@@ -214,9 +238,11 @@
           ctx.scale(zoomSize, zoomSize)
           ctx.fillRect(-width / (2 * zoomSize), -height / (2 * zoomSize), width / zoomSize, height / zoomSize)
           if (this.model === 'phone') {
-            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), height / 2, width / 2)
+            tempInitWidth = (typeof initRate !== 'undefined') ? (height / initRate) : width
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), height / 2, tempInitWidth / 2)
           } else {
-            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), width / 2, height / 2)
+            tempInitheight = (typeof initRate !== 'undefined') ? (width / initRate) : height
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), width / 2, tempInitheight / 2)
           }
           ctx.scale(1 / zoomSize, 1 / zoomSize)
           ctx.translate(-width / 2, -height / 2)
@@ -228,7 +254,7 @@
           } else if (this.deltaY > 5) {
             this.deltaY = 5
           }
-          this.selectColor(this.deltaY)
+          this.selectColor(this.deltaY, null, null, undefined, undefined, undefined, this.initRate)
 
           event.preventDefault()
         },
@@ -242,8 +268,11 @@
           canvas.css({
             'cursor': 'move'
           })
+          canvas.on('contextmenu', function (event) {
+            event.preventDefault()
+          })
           canvas.on('mousemove', function (event) {
-            self.selectColor(self.deltaY, (event.offsetX - self.offset.x) / self.deltaY, (event.offsetY - self.offset.y) / self.deltaY)
+            self.selectColor(self.deltaY, (event.offsetX - self.offset.x) / self.deltaY, (event.offsetY - self.offset.y) / self.deltaY, undefined, undefined, undefined, self.initRate)
           })
 
           canvas.on('mouseleave', function () {
@@ -294,7 +323,7 @@
                 canvas.get(0).height = canvasHeight
                 scale = canvasWidth / $('#canvas').width()
               }
-              init.call(self, self.deltaY, null, null, self.offset.imgPosX * scale, self.offset.imgPosY * scale, '#canvas2')
+              init.call(self, self.deltaY, null, null, self.offset.imgPosX * scale, self.offset.imgPosY * scale, '#canvas2', self.initRate)
             }
           }
           var canvas = $('#canvas2')
@@ -332,6 +361,9 @@
       var toolSlider = $('.tool-slider')
       var colorBoard = $('.color-board img')
       var canvasContainer = $('.canvas-container')
+      var fileLoad = $('#load-pic')
+      var fileReader = new FileReader()
+      var fileLoadContainer = $('#load-pic-container')
       $('body').css({
 //        'background-image': 'url(../static/img/bgpic.429b3d0.png)'
         'background-image': 'url(/laboratory/static/img/bgpic.429b3d0.png)'
@@ -345,7 +377,15 @@
 
       if (!noBind) {
         this.pic.onload = function () {
-          init.call(self, self.deltaY)
+          // 初始化数据
+          initCanvasBoxunderModal(self.model)
+          if (self.initRate) {
+            self.offset.imgPosY = self.offset.imgPosX / self.initRate
+            init.call(self, self.deltaY, null, null, undefined, undefined, undefined, self.initRate)
+          } else {
+            init.call(self, self.deltaY)
+          }
+          window.Materialize.toast('加载完毕！', 2000)
         }
         windowDom.resize(function () {
           mainBox.height(windowDom.height() - 170)
@@ -354,6 +394,33 @@
         colorBoard.on('click', function () {
           $('.flow-text').trigger('click')
         })
+        fileLoad.on('change', function (event) {
+          var AllImgExt = '.jpg|.jpeg|.gif|.bmp|.png'
+          var file = $(event.target).get(0).files[0]
+          if (typeof file === 'undefined') {
+            window.Materialize.toast('请上传一张图片！', 2000)
+            return false
+          }
+          if (!file.name.match(AllImgExt)) {
+            window.Materialize.toast('上传图片格式错误！', 2000)
+            return false
+          }
+          self.loadText = file.name || '上传本地图片'
+          fileReader.readAsDataURL(file)
+          window.Materialize.toast('读取数据中...', 2000)
+          fileReader.onload = function (file) {
+            fileLoadContainer.get(0).src = file.target.result
+            window.Materialize.toast('读取完成！', 2000)
+            fileLoadContainer.on('load', function () {
+              window.Materialize.toast('加载图片中..', 2000)
+              self.originSize.pic.width = fileLoadContainer.width()
+              self.originSize.pic.height = fileLoadContainer.height()
+              self.initRate = fileLoadContainer.width() / fileLoadContainer.height()
+              self.pic.src = file.target.result
+              fileLoadContainer.unbind('load')
+            })
+          }
+        })
       }
       function fixCanvasBox () {
         if (windowDom.height() < 800) {
@@ -361,11 +428,11 @@
         } else {
           toolSlider.removeClass('fix-tool')
         }
-
-        initCanvasBoxunderModal(self.model)
-        init.call(self, self.deltaY)
+        // resize 不需要改变位置
+        var scale = initCanvasBoxunderModal(self.model, 'noInit')
+        init.call(self, self.deltaY, null, null, self.offset.imgPosX * scale, self.offset.imgPosY * scale, undefined, self.initRate)
       }
-      function initCanvasBoxunderModal (modal) {
+      function initCanvasBoxunderModal (modal, isInit) {
         var canvasHeight
         var canvasWidth
         var scale
@@ -374,8 +441,14 @@
           canvasWidth = Math.ceil(canvasHeight * 7 / 12)
           canvas.get(0).width = canvasWidth
           canvas.get(0).height = canvasHeight
-          self.offset.imgPosX = -canvas.height() / 4
-          self.offset.imgPosY = -canvas.width() / 4
+          if (!isInit) {
+            self.offset.imgPosX = -canvas.height() / 4
+            if (self.initRate) {
+              self.offset.imgPosY = self.offset.imgPosX / self.initRate
+            } else {
+              self.offset.imgPosY = -canvas.width() / 4
+            }
+          }
           canvasContainer.height(canvasHeight)
           canvasContainer.width(canvasWidth)
           scale = canvasHeight / self.originSize[modal].canvasHeight
@@ -388,8 +461,14 @@
           canvasHeight = Math.ceil(canvasWidth * 9 / 16)
           canvas.get(0).width = canvasWidth
           canvas.get(0).height = canvasHeight
-          self.offset.imgPosX = -canvas.width() / 4
-          self.offset.imgPosY = -canvas.height() / 4
+          if (!isInit) {
+            self.offset.imgPosX = -canvas.width() / 4
+            if (self.initRate) {
+              self.offset.imgPosY = self.offset.imgPosX / self.initRate
+            } else {
+              self.offset.imgPosY = -canvas.height() / 4
+            }
+          }
           canvasContainer.height(canvasHeight)
           canvasContainer.width(canvasWidth)
           scale = canvasWidth / self.originSize[modal].canvasWidth
@@ -398,6 +477,7 @@
           })
           $('head').append('<style>.canvas-mac:after{ width:calc(100% + ' + scale * self.originSize[modal].borderWidth + 'px) !important;height:calc(100% + ' + scale * self.originSize[modal].borderHeight + 'px) !important;left: calc(50% + ' + scale * self.originSize[modal].left + 'px);top: calc(50% + ' + scale * self.originSize[modal].top + 'px); }</style>')
         }
+        return scale
       }
     }
   }
