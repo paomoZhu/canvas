@@ -327,23 +327,28 @@
             }
           }
           var canvas = $('#canvas2')
-          var imgdata = canvas.get(0).toDataURL(type)
-          var fixtype = function (type) {
-            type = type.toLocaleLowerCase().replace(/jpg/i, 'jpeg')
-            var r = type.match(/png|jpeg|bmp|gif/)[0]
-            return 'image/' + r
+          var imgdata = canvas.get(0).toDataURL('image/' + type)
+          function base64Img2Blob (code) {
+            var parts = code.split(';base64,')
+            var contentType = parts[0].split(':')[1]
+            var raw = window.atob(parts[1])
+            var rawLength = raw.length
+            var uInt8Array = new Uint8Array(rawLength)
+            for (var i = 0; i < rawLength; ++i) {
+              uInt8Array[i] = raw.charCodeAt(i)
+            }
+            return new Blob([uInt8Array], {type: contentType})
           }
-          imgdata = imgdata.replace(fixtype(type), 'image/octet-stream')
-          var saveFile = function (data, filename) {
-            var link = document.createElement('a')
-            link.href = data
-            link.download = filename
-            var event = document.createEvent('MouseEvents')
-            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-            link.dispatchEvent(event)
+          function downloadFile (fileName, content) {
+            var aLink = document.createElement('a')
+            var blob = base64Img2Blob(content)  // new Blob([content]);
+            aLink.download = fileName
+            aLink.href = URL.createObjectURL(blob)
+            var evt = document.createEvent('MouseEvents')
+            evt.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+            aLink.dispatchEvent(evt)
           }
-          var filename = new Date().toLocaleDateString() + '.' + type
-          saveFile(imgdata, filename)
+          downloadFile(this.loadText === '上传本地图片' ? 'demo.jpg' : this.loadText, imgdata)
         }
       }
     },
