@@ -239,10 +239,10 @@
           ctx.fillRect(-width / (2 * zoomSize), -height / (2 * zoomSize), width / zoomSize, height / zoomSize)
           if (this.model === 'phone') {
             tempInitWidth = (typeof initRate !== 'undefined') ? (height / initRate) : width
-            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), height / 2, tempInitWidth / 2)
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), tempInitheight / 2, tempInitWidth / 2)
           } else {
             tempInitheight = (typeof initRate !== 'undefined') ? (width / initRate) : height
-            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), width / 2, tempInitheight / 2)
+            ctx.drawImage(this.pic, imgPos.x + (offsetX || 0), imgPos.y + (offsetY || 0), tempInitWidth / 2, tempInitheight / 2)
           }
           ctx.scale(1 / zoomSize, 1 / zoomSize)
           ctx.translate(-width / 2, -height / 2)
@@ -423,14 +423,14 @@
         })
       }
       function fixCanvasBox () {
-        if (windowDom.height() < 800) {
+        if (windowDom.height() < 300) {
           toolSlider.addClass('fix-tool')
         } else {
           toolSlider.removeClass('fix-tool')
         }
         // resize 不需要改变位置
-        var scale = initCanvasBoxunderModal(self.model, 'noInit')
-        init.call(self, self.deltaY, null, null, self.offset.imgPosX * scale, self.offset.imgPosY * scale, undefined, self.initRate)
+        initCanvasBoxunderModal(self.model, 'noInit')
+        init.call(self, self.deltaY, null, null, self.offset.imgPosX, self.offset.imgPosY, undefined, self.initRate)
       }
       function initCanvasBoxunderModal (modal, isInit) {
         var canvasHeight
