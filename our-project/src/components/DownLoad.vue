@@ -962,7 +962,7 @@
     width: 60px;
     height: 60px;
     overflow: hidden;
-    background-image: url(/static/img/touxiang.ae8ef1f.png);
+    background-image: url(../assets/touxiang.png);
     background-position: -137px -71px;
     background-repeat: no-repeat;
     background-size: 200px 292px;
