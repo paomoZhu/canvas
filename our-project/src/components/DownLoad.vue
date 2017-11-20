@@ -7,67 +7,99 @@
     </div>
 
     <img src="../assets/bgpic.png" style="display: none" alt="">
+    <div class="modal-bg"></div>
 
     <div class="row valign-wrapper" id="main" style="overflow: hidden;position: relative">
       <img id="load-pic-container" style="position: absolute; top: 9999px" src="">
       <div class="col s6 m6 valign" id="canvas-box">
-        <ul class="tool-slider">
-          <li>
-            <div class="col s2">
-              <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/phone-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="手机模式">
-              <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/mac-modal.png" style="width: 30px;height: 30px;margin: 4px 2px;" class="tooltipped" data-position="right" data-delay="0" data-tooltip="电脑模式">
-            </div>
-          </li>
-          <li>
-            <div class="col s2 color-board">
-              <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(deltaY, null, null, undefined, undefined, undefined, initRate)">
-              <img src="../assets/color-board.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="设置背景色">
-            </div>
-          </li>
-          <li>
-            <div class="col s2 horizontal">
-              <img src="../assets/download.png" v-on:click="download('jpg')" class="tooltipped" data-position="right" data-delay="0" data-tooltip="下载图片">
-            </div>
-          </li>
-        </ul>
         <div class="canvas-container" v-bind:class="{'canvas-mac': model == 'mac', 'canvas-phone': model == 'phone'}">
           <canvas id="canvas" class="valign" v-on:mousedown="bindMove($event)" v-on:mousewheel="aa($event)"></canvas>
         </div>
       </div>
       <div class="col s6 m6" style="position: relative;">
         <div class="row">
-          <div class="waves-effect waves-light btn" id="load-pic-div" style="position: relative; overflow: hidden">
-            {{loadText}}
-            <i class="material-icons Medium right">work</i>
-            <input type="file" style="cursor: pointer;position: absolute; top: 0; left: 0;opacity: 0;width: 100%; height: 100%;" class="waves-effect waves-light btn" id="load-pic">
+          <div id="ybyh-modal" class="modal" style="transition: all 200ms;">
+            <div class="modal-content">
+              <h5 style="color: #333">下载</h5>
+              <div class="row clear-row-margin">
+                <div class="col s12 left-align" style="color: #666">
+                  图片名称:
+                  <div class="input-field inline">
+                    <input v-model="fileName" id="first_name2" type="text" class="validate">
+                    <label class="active" for="first_name2">姓名</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row clear-row-margin">
+                <div class="col s12 left-align" style="color: #666">
+                  图片规格:
+                  <div class="input-field inline">
+                    <input id="pic-width" type="number" v-model="importWidth" v-on:change="setImport('height')" class="validate">
+                    <label for="pic-width" v-bind:class="{active: !!importWidth}">宽度</label>
+                  </div>
+                  <i class="material-icons" style="color: #26a599;opacity: .5;font-size: 18px;">lock</i>
+                  <div class="input-field inline">
+                    <input id="pic-height" type="number" v-model="importHeight" v-on:change="setImport('width')" class="validate">
+                    <label v-bind:class="{active: !!importHeight}" for="pic-height">高度</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-green btn-flat" v-on:click="download('jpg', closeModal, fileName)">确认</a>
+              <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-green btn-flat" v-on:click="closeModal()">取消</a>
+            </div>
           </div>
         </div>
         <div class="row">
+          <div class="col s12">
+            <div class="menu-container">
+              <ul>
+                <div class="block-scene"></div>
+                <li class="menu-sub menu-sub-1">
+                  <div class="inner">一</div>
+                  <div class="outer">
+                    <img src="../assets/upload.png">
+                    <input type="file" style="cursor: pointer;position: absolute; top: 0; left: 0;opacity: 0;width: 100%; height: 100%;background-color: transparent !important;z-index: 2" id="load-pic" class="tooltipped" data-position="right" data-delay="0" data-tooltip="上传图片">
+                  </div>
+                </li>
+                <li class="menu-sub menu-sub-2">
+                  <div class="inner">笔</div>
+                  <div class="outer">
+                    <img v-show="model === 'mac'" v-on:click="changeModal()" src="../assets/phone-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="手机模式">
+                    <img v-show="model === 'phone'" v-on:click="changeModal()" src="../assets/mac-modal.png" class="tooltipped" data-position="right" data-delay="0" data-tooltip="电脑模式">
+                  </div>
+                </li>
+                <li class="menu-sub menu-sub-3">
+                  <div class="inner">画</div>
+                  <div class="outer color-board">
+                    <input type="color" class="flow-text" id="color-select" v-model="color" v-on:change="selectColor(deltaY, null, null, undefined, undefined, undefined, initRate)">
+                    <img src="../assets/color-board.png" class="tooltipped" data-position="left" data-delay="0" data-tooltip="设置背景色">
+                  </div>
+                </li>
+                <li class="menu-sub menu-sub-4">
+                  <div class="inner">一</div>
+                  <div class="outer horizontal">
+                    <img src="../assets/download.png" v-on:click="openModal('ybyh-modal')" class="tooltipped" data-position="left" data-delay="0" data-tooltip="下载图片">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col s12">
+            <div class="cover"></div>
+          </div>
           <div class="col s12">
             <label>原画作者：</label>
             <span>QMeiZi</span>
           </div>
           <div class="col s12">
-            <label>来自：</label>
-            <span>站酷</span>
+            <span>在职ui设计师，坐标杭州。喜欢摄影，户外徒步，寄情山水之间。</span>
           </div>
           <div class="col s12">
             <label>原画大小：</label>
             <span>{{originSize.pic.width}} · {{originSize.pic.height}}</span>
           </div>
-        </div>
-        <div class="row">
-          <div class="col s12">
-            下载图片规格:
-            <div class="input-field inline">
-              <input id="pic-width" placeholder="宽度" type="number" v-model="importWidth" v-on:change="setImport('height')" class="validate">
-            </div>
-            <i class="material-icons">lock</i>
-            <div class="input-field inline">
-              <input id="pic-height" placeholder="高度" type="number" v-model="importHeight" v-on:change="setImport('width')" class="validate">
-            </div>
-          </div>
-          <span class="thin" style="font-size: 13px">（ 默认当前画布大小 ）</span>
         </div>
         <canvas id="canvas2" style="position: absolute;top: -999999px"></canvas>
       </div>
@@ -86,6 +118,8 @@
         importHeight: '',
         deltaY: 1,
         loadText: '上传本地图片',
+        fileName: 'demo',
+        uploadPic: false,
         offset: {
           x: 0,
           y: 0,
@@ -115,6 +149,26 @@
         },
         initRate: undefined,
         model: 'mac',
+        openModal: function () {
+          var ybyhModal = $('#ybyh-modal')
+          var modalBg = $('.modal-bg')
+          var canvas = $('#canvas')
+          this.fileName = this.loadText === '上传本地图片' ? 'ybiyhua.jpg' : this.loadText
+          this.importHeight = canvas.height()
+          this.importWidth = canvas.width()
+          ybyhModal.show()
+          modalBg.show()
+          setTimeout(function () {
+            ybyhModal.addClass('modal-show')
+            modalBg.addClass('modal-bg-show')
+          }, 0)
+        },
+        closeModal: function () {
+          $('#ybyh-modal').removeClass('modal-show')
+          $('.modal-bg').removeClass('modal-bg-show')
+          $('#ybyh-modal').hide()
+          $('.modal-bg').hide()
+        },
         setImport: function (key) {
           if (typeof this.importWidth === 'undefined' || typeof this.importHeight === 'undefined' || (this.importHeight === '' && key === 'width') || (this.importWidth === '' && key === 'height')) {
             this.importWidth = ''
@@ -291,7 +345,7 @@
             })
           })
         },
-        download: function (type) {
+        download: function (type, callback) {
           var importWidth = $('#pic-width')
           var importHeight = $('#pic-height')
           initDraw.call(this)
@@ -347,8 +401,11 @@
             var evt = document.createEvent('MouseEvents')
             evt.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
             aLink.dispatchEvent(evt)
+            if (callback) {
+              callback()
+            }
           }
-          downloadFile(this.loadText === '上传本地图片' ? 'demo.jpg' : this.loadText, imgdata)
+          downloadFile(typeof this.fileName === 'undefined' ? 'ybiyhua.jpg' : this.fileName, imgdata)
         }
       }
     },
@@ -577,13 +634,7 @@
   }
 
   .color-board img {
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 2;
-    width: 30px !important;
-    height: 30px !important;
-    margin: 2px 3px;
   }
 
   .color-board {
@@ -655,6 +706,270 @@
   #dropdown1 li {
     margin: 0;
   }
+
+  .modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    padding: 0;
+    max-height: 70%;
+    width: 55%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    z-index: 1003;
+    opacity: 0.5;
+    transform: scaleX(0.8);
+    top: calc(10% + 30px);
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.3);
+  }
+  .modal-show {
+    display: block;
+    opacity: 1;
+    transform: scaleX(1);
+    top: calc(10%);
+  }
+  .clear-row-margin {
+    margin: 0;
+  }
+  .btn-flat:hover {
+    background-color: rgba(0,0,0,0.1);
+    box-shadow: none;
+  }
+  .modal-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #555;
+    opacity: 0;
+    display: none;
+    transition: all 200ms;
+  }
+  .modal-bg-show {
+    opacity: 0.5;
+    display: block;
+  }
+  .menu-container {
+    width: 56px;
+    height: 56px;
+    opacity: 0.5;
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+
+  .menu-container ul {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    transition: all 200ms;
+    position: relative;
+  }
+
+  .menu-container ul .block-scene {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+  }
+
+  .menu-container li {
+    width: 50%;
+    height: 50%;
+    display: inline-block;
+    margin: 0;
+    float: left;
+    box-sizing: border-box;
+  }
+
+  .menu-container ul:hover {
+    cursor: default;
+    transform: rotateZ(45deg);
+  }
+  .menu-container ul:hover .block-scene{
+    width: 200%;
+    height: 200%;
+    transform: rotateZ(-45deg) translateY(-35%);
+  }
+  .menu-container ul:hover .menu-sub .outer {
+    cursor: pointer;
+    line-height: calc(1.4 * 28px);
+    z-index: 9;
+    border-color: #26a599 !important;
+    opacity: 1;
+    border-width: 2px !important;
+  }
+  .menu-container ul:hover .menu-sub .inner {
+    opacity: 0;
+  }
+
+  .menu-container ul:hover .menu-sub{
+    border-color: #26a599;
+    border-width: 2px !important;
+  }
+
+  .menu-container ul:hover .menu-sub-1 {
+    transform: translate(-4px, -4px);
+    border-bottom-right-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-1 .outer {
+    border: 1px solid;
+    border-bottom: none;
+    width: calc(1.4 * 28px);
+    height: calc(1.4 * 28px);
+    transform: rotate(-45deg) translateY(calc(-1.4 / 4 * 28px));
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-2 {
+    transform: translate(4px, -4px);
+    border-bottom-left-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-2 .outer {
+    border: 1px solid;
+    border-left: none;
+    width: calc(1.4 * 28px);
+    height: calc(1.4 * 28px);
+    transform: rotate(-45deg) translateX(calc(1.4 / 4 * 28px));
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-3 {
+    transform: translate(-4px, 4px);
+    border-top-right-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-3 .outer {
+    border: 1px solid;
+    border-right: none;
+    width: calc(1.4 * 28px);
+    height: calc(1.4 * 28px);
+    transform: rotate(-45deg) translateX(calc(-1.4 / 4 * 28px));
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-4 {
+    transform: translate(4px, 4px);
+    border-top-left-radius: 5px;
+  }
+
+  .menu-container ul:hover .menu-sub-4 .outer {
+    border: 1px solid;
+    border-top: none;
+    width: calc(1.4 * 28px);
+    height: calc(1.4 * 28px);
+    transform: rotate(-45deg) translateY(calc(1.4 / 4 * 28px));
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .menu-sub {
+    position: relative;
+  }
+
+  .menu-sub .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 28px;
+    z-index: 8;
+    box-sizing: border-box;
+  }
+
+  .menu-sub .outer {
+    position: absolute;
+    line-height: 28px;
+    z-index: 5;
+    height: 100%;
+    opacity: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 5px;
+    transition: all 200ms;
+  }
+
+  .menu-sub .outer img {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+  }
+  .menu-sub .outer img:hover {
+    background-color: #cdcdcd;
+  }
+  .menu-sub .outer img:active {
+    background-color: #aaa;
+  }
+
+  .menu-sub-1 {
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #999;
+  }
+  .menu-sub-1 .outer {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu-sub-2 {
+    border-left: 1px solid #999;
+    border-bottom: 1px solid #999;
+  }
+  .menu-sub-2 .outer {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu-sub-3 {
+    border-right: 1px solid #999;
+    border-top: 1px solid #999;
+  }
+  .menu-sub-3 .outer {
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menu-sub-4 {
+    border-left: 1px solid #999;
+    border-top: 1px solid #999;
+  }
+  .menu-sub-4 .outer {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cover {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    background-image: url(/static/img/touxiang.ae8ef1f.png);
+    background-position: -137px -71px;
+    background-repeat: no-repeat;
+    background-size: 200px 292px;
+    display: inline-block;
+  }
+
+
 </style>
 <style>
   body {
