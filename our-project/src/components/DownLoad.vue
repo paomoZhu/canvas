@@ -26,7 +26,7 @@
                   图片名称:
                   <div class="input-field inline">
                     <input v-model="fileName" id="first_name2" type="text" class="validate">
-                    <label class="active" for="first_name2">姓名</label>
+                    <label class="active" for="first_name2">名称</label>
                   </div>
                 </div>
               </div>
@@ -605,25 +605,7 @@
   }
 
   #canvas {
-    /*border: 1px solid #666;*/
-    /*box-shadow: 0 0 3px;*/
     cursor: pointer;
-  }
-
-  .tool-slider {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    margin: 0;
-    transform: translateY(-50%);
-    box-shadow: 0 0 2px;
-    height: 113px;
-    background-color: #fff;
-    z-index: 99;
-  }
-
-  .fix-tool {
-    top: 400px;
   }
 
   .tool-slider li {
