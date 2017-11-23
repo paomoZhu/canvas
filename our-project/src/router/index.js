@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import FilterColor from '@/components/FilterColor'
 import Login from '@/components/Login'
 import DownLoad from '@/components/DownLoad'
+import Canvas from '@/components/Canvas'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/download',
       name: 'downLoad',
       component: DownLoad
+    },
+    {
+      path: '/canvas',
+      name: 'canvas',
+      component: Canvas
     }
   ]
 })

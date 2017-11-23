@@ -10,7 +10,8 @@
     <!--<div class="col s2 m2" v-bind:style="{ backgroundColor: color}">-->
       <!--<p class="z-depth-2" style="color: #fff">color</p>-->
     <!--</div>-->
-
+    <img src="../assets/smile_1.gif" width="56" height="56" alt="">
+    <img src="../assets/smile_2.gif" width="35" height="35" alt="">
     <div class="row" v-for="tool in tools">
       <div class="col s3 m3">
         <div class="card">
