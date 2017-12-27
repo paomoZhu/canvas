@@ -5,7 +5,7 @@ import FilterColor from '@/components/FilterColor'
 import Login from '@/components/Login'
 import DownLoad from '@/components/DownLoad'
 import Canvas from '@/components/Canvas'
-
+import CircleCanvas from '@/components/canvas-circle'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +34,10 @@ export default new Router({
       path: '/canvas',
       name: 'canvas',
       component: Canvas
+    },
+    {
+      path: '/canvas-circles',
+      component: CircleCanvas
     }
   ]
 })

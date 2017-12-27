@@ -411,8 +411,8 @@
     },
     created: function () {
       this.color = '#fffcf8'
-//      this.pic.src = '../static/img/cover_1.8027e65.png'
-      this.pic.src = '/laboratory/static/img/cover_1.8027e65.png'
+      this.pic.src = '../static/img/cover_1.8027e65.png'
+//      this.pic.src = '/laboratory/static/img/cover_1.8027e65.png'
     },
     mounted: function (noBind) {
       var init = this.selectColor
@@ -427,8 +427,8 @@
       var fileReader = new FileReader()
       var fileLoadContainer = $('#load-pic-container')
       $('body').css({
-//        'background-image': 'url(../static/img/bgpic.429b3d0.png)'
-        'background-image': 'url(/laboratory/static/img/bgpic.429b3d0.png)'
+        'background-image': 'url(../static/img/bgpic.429b3d0.png)'
+//        'background-image': 'url(/laboratory/static/img/bgpic.429b3d0.png)'
       })
       mainBox.height(windowDom.height() - 170)
       if (this.model === 'phone') {
