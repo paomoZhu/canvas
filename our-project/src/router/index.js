@@ -52,7 +52,7 @@ export default new Router({
       component: CrushCircles
     },
     {
-      path: '/cycle-cirlces',
+      path: '/cycle-circles',
       component: CycleCircles
     }
   ]
