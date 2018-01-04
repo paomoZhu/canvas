@@ -7,6 +7,8 @@ import DownLoad from '@/components/DownLoad'
 import Canvas from '@/components/Canvas'
 import CircleCanvas from '@/components/canvas-circle'
 import GravityCanvas from '@/components/canvas-gravity'
+import CrushCircles from '@/components/cursh-circles'
+
 Vue.use(Router)
 
 export default new Router({
@@ -43,6 +45,10 @@ export default new Router({
     {
       path: '/canvas-gracity',
       component: GravityCanvas
+    },
+    {
+      path: '/crush-circles',
+      component: CrushCircles
     }
   ]
 })
