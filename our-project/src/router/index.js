@@ -8,6 +8,7 @@ import Canvas from '@/components/Canvas'
 import CircleCanvas from '@/components/canvas-circle'
 import GravityCanvas from '@/components/canvas-gravity'
 import CrushCircles from '@/components/cursh-circles'
+import CycleCircles from '@/components/cycle-circles'
 
 Vue.use(Router)
 
@@ -49,6 +50,10 @@ export default new Router({
     {
       path: '/crush-circles',
       component: CrushCircles
+    },
+    {
+      path: '/cycle-cirlces',
+      component: CycleCircles
     }
   ]
 })
